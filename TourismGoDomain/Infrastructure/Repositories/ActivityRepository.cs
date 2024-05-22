@@ -9,51 +9,52 @@ using TourismGoDomain.Infrastructure.Data;
 
 namespace TourismGoDomain.Infrastructure.Repositories
 {
-    public class CompanyRepository : ICompanyRepository
+    public class ActivityRepository : IActivityRepository
     {
         private readonly TourismGoContext _dbContext;
-        public CompanyRepository(TourismGoContext dbContext)
+
+        public ActivityRepository(TourismGoContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Companies>> GetAll()
+        public async Task<IEnumerable<Activities>> GetAll()
         {
-            return await _dbContext.Companies.ToListAsync();
+            return await _dbContext.Activities.ToListAsync();
         }
 
-        public async Task<Companies> GetById(int id)
+        public async Task<Activities> GetById(int id)
         {
             return await _dbContext
-                    .Companies
-                    .Where(c => c.Id == id)
-                    .FirstOrDefaultAsync();
+                .Activities
+                .Where(a => a.Id == id)
+                .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> Insert(Companies companies)
+        public async Task<bool> Insert(Activities activities)
         {
-            await _dbContext.Companies.AddAsync(companies);
+            await _dbContext.Activities.AddAsync(activities);
             int rows = await _dbContext.SaveChangesAsync();
             return rows > 0;
         }
 
-        public async Task<bool> Update(Companies companies)
+        public async Task<bool> Update(Activities activities)
         {
-            _dbContext.Companies.Update(companies);
+            _dbContext.Activities.Update(activities);
             int rows = await _dbContext.SaveChangesAsync();
             return rows > 0;
         }
 
         public async Task<bool> Delete(int id)
         {
-            var findCompanies = await _dbContext
-                .Companies
-                .Where(c => c.Id == id)
+            var findActivity = await _dbContext
+                .Activities
+                .Where(a => a.Id == id)
                 .FirstOrDefaultAsync();
 
-            if (findCompanies == null) return false;
+            if (findActivity == null) return false;
 
-            _dbContext.Companies.Remove(findCompanies);
+            _dbContext.Activities.Remove(findActivity);
             int rows = await _dbContext.SaveChangesAsync();
             return rows > 0;
         }
