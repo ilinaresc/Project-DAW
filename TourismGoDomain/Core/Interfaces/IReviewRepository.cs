@@ -1,6 +1,6 @@
 ﻿using TourismGoDomain.Core.Entities;
 
-namespace TourismGoDomain.Infrastructure.Repositories
+namespace TourismGoDomain.Core.Interfaces
 {
     public interface IReviewRepository
     {

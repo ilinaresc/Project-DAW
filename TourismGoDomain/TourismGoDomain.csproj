@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <Folder Include="Core\DTO\" />
+    <Folder Include="Core\DTO\" />
+    <Folder Include="Core\Services\" />
     <Folder Include="Core\Services\" />
   </ItemGroup>
 
