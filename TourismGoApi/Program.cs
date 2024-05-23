@@ -12,9 +12,11 @@ builder.Services
     .AddDbContext<TourismGoContext>
     (options => options.UseSqlServer(cnx));
 
-builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IActivityRepository, ActivityRepository>();
+builder.Services.AddTransient<IBookingRepository, BookingRepository>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
-
+builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
