@@ -14,6 +14,9 @@ builder.Services
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
+builder.Services.AddTransient<IActivityRepository, ActivityRepository>();
+builder.Services.AddTransient<IBookingRepository, BookingRepository>();
+builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
 
 
 builder.Services.AddControllers();
