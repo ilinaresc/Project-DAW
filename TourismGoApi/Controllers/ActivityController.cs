@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TourismGoDomain.Core.Entities;
 using TourismGoDomain.Core.Interfaces;
+using TourismGoDomain.Infrastructure.Repositories;
 
 namespace TourismGoApi.Controllers
 {
