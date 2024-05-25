@@ -15,9 +15,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Core\DTO\" />
-    <Folder Include="Core\Services\" />
-  </ItemGroup>
-
 </Project>
