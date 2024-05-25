@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TourismGoDomain.Core.Interfaces;
+using TourismGoDomain.Core.Services;
 using TourismGoDomain.Infrastructure.Data;
 using TourismGoDomain.Infrastructure.Repositories;
 
@@ -17,7 +18,7 @@ builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 builder.Services.AddTransient<IActivityRepository, ActivityRepository>();
 builder.Services.AddTransient<IBookingRepository, BookingRepository>();
 builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
-
+builder.Services.AddTransient<IActivityService, ActivityService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
