@@ -17,5 +17,5 @@ public partial class Reviews
 
     public virtual Activities? Activity { get; set; }
 
-    public virtual Users? User { get; set; }
+    public virtual User? User { get; set; }
 }
