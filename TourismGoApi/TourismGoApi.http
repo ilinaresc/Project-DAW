@@ -1,6 +1,14 @@
 @TourismGoApi_HostAddress = http://localhost:5222
+@signIn = {"Email":"danieldd.93@gmail.com", "Password":"12345678"}
 
 GET {{TourismGoApi_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+POST {{TourismGoApi_HostAddress}}/api/user/SignIn
+Content-Type: application/json
+
+{{signIn}}
 
 ###

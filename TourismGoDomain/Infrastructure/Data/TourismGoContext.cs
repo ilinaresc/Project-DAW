@@ -24,12 +24,12 @@ public partial class TourismGoContext : DbContext
 
     public virtual DbSet<Reviews> Reviews { get; set; }
 
-    public virtual DbSet<Users> Users { get; set; }
+    public virtual DbSet<User> User { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
                 //=> optionsBuilder.UseSqlServer("Server=BRIGITETARA9440;Database=TourismGo;Integrated Security=true;TrustServerCertificate=True");
-                => optionsBuilder.UseSqlServer("Server=localhost;Database=TourismGo;User=sa;Pwd=12345678;TrustServerCertificate=True");
+                => optionsBuilder.UseSqlServer("Server=192.168.0.110\\SQLEXPRESS;Database=TourismGo;Integrated Security=true;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -94,15 +94,18 @@ public partial class TourismGoContext : DbContext
                 .HasConstraintName("FK__Reviews__UserID__4222D4EF");
         });
 
-        modelBuilder.Entity<Users>(entity =>
+        modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC276DBCA855");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Address).HasMaxLength(100);
+            entity.Property(e => e.Country).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.FirstName).HasMaxLength(50);
+            entity.Property(e => e.LastName).HasMaxLength(50);
             entity.Property(e => e.Password).HasMaxLength(100);
-            entity.Property(e => e.Role).HasMaxLength(50);
+            entity.Property(e => e.Type)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength();
         });
 
         OnModelCreatingPartial(modelBuilder);

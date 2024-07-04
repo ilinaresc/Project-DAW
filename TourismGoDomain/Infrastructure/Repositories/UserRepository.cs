@@ -18,45 +18,19 @@ namespace TourismGoDomain.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Users>> GetAll()
+        public async Task<bool> Insert(User user)
         {
-            return await _dbContext.Users.ToListAsync();
+            await _dbContext.User.AddAsync(user);
+            int rows = await _dbContext.SaveChangesAsync();
+            return rows > 0;
         }
 
-        public async Task<Users> GetById(int id)
+        public async Task<User> SignIn(string email, string pwd)
         {
             return await _dbContext
-                    .Users
-                    .Where(u => u.Id == id)
-                    .FirstOrDefaultAsync();
-        }
-
-        public async Task<bool> Insert(Users users)
-        {
-            await _dbContext.Users.AddAsync(users);
-            int rows = await _dbContext.SaveChangesAsync();
-            return rows > 0;
-        }
-
-        public async Task<bool> Update(Users users)
-        {
-            _dbContext.Users.Update(users);
-            int rows = await _dbContext.SaveChangesAsync();
-            return rows > 0;
-        }
-
-        public async Task<bool> Delete(int id)
-        {
-            var findUsers = await _dbContext
-                .Users
-                .Where(f => f.Id == id)
+                .User
+                .Where(x => x.Email == email && x.Password == pwd)
                 .FirstOrDefaultAsync();
-
-            if (findUsers == null) return false;
-
-            _dbContext.Users.Remove(findUsers);
-            int rows = await _dbContext.SaveChangesAsync();
-            return rows > 0;
         }
     }
 }

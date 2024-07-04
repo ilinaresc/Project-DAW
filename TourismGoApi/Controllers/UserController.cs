@@ -1,61 +1,50 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TourismGoDomain.Core.DTO;
 using TourismGoDomain.Core.Entities;
 using TourismGoDomain.Core.Interfaces;
 
 namespace TourismGoApi.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpPost("SignUp")]
+        public async Task<IActionResult> SignUp([FromBody] UserRequestAuthDTO userRequest)
         {
-            var users = await _userRepository.GetAll();
-            return Ok(users);
-        }
+            var user = new User()
+            {
+                Email = userRequest.Email,
+                Password = userRequest.Password,
+                FirstName = userRequest.FirstName,
+                LastName = userRequest.LastName,
+                Country = userRequest.Country,
+                DateOfBirth = userRequest.DateOfBirth,
+                Address = userRequest.Address,
+                IsActive = true,
+                Type = "U"
+            };
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var users = await _userRepository.GetById(id);
-            if (users == null)
-                return NotFound();
-
-            return Ok(users);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Insert([FromBody] Users users)
-        {
-            var result = await _userRepository.Insert(users);
-            if (!result) return BadRequest();
+            var result = await _userService.Insert(user);
+            if (!result) return BadRequest(result);
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Users users)
+        [HttpPost("SignIn")]
+        public async Task<IActionResult> SignIn([FromBody] UserAuthDTO authDTO)
         {
-            if (id != users.Id) return BadRequest();
-            var result = await _userRepository.Update(users);
-            if (!result) return BadRequest();
+            //TODO: Validar email
+            var result = await _userService.SignIn(authDTO.Email, authDTO.Password);
+            if (result == null) return NotFound();
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var result = await _userRepository.Delete(id);
-            if (!result)
-                return BadRequest();
-            return Ok(result);
-        }
     }
 }
