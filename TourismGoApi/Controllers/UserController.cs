@@ -46,5 +46,19 @@ namespace TourismGoApi.Controllers
             return Ok(result);
         }
 
+        // Nuevo método para cambiar la contraseña
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestDTO request)
+        {
+            if (request == null || string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.CurrentPassword) || string.IsNullOrEmpty(request.NewPassword))
+            {
+                return BadRequest("Los datos son inválidos.");
+            }
+
+            var result = await _userService.ChangePassword(request.Email, request.CurrentPassword, request.NewPassword);
+            if (!result) return Unauthorized("Email o contraseña actual incorrectos.");
+            return Ok("Contraseña cambiada con éxito.");
+        }
+
     }
 }

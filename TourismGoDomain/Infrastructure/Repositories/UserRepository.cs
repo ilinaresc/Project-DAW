@@ -32,5 +32,28 @@ namespace TourismGoDomain.Infrastructure.Repositories
                 .Where(x => x.Email == email && x.Password == pwd)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<bool> Update(User user)
+        {
+            _dbContext.User.Update(user);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> ChangePassword(string email, string currentPassword, string newPassword)
+        {
+            var user = await _dbContext
+                .User
+                .Where(x => x.Email == email && x.Password == currentPassword)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                return false;
+
+            
+            user.Password = newPassword;
+
+            _dbContext.User.Update(user);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
     }
 }

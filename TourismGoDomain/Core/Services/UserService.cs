@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TourismGoDomain.Core.DTO;
 using TourismGoDomain.Core.Entities;
 using TourismGoDomain.Core.Interfaces;
@@ -50,5 +51,18 @@ namespace TourismGoDomain.Core.Services
         {
             return await _userRepository.Insert(user);
         }
+
+        public async Task<bool> ChangePassword(string email, string currentPassword, string newPassword)
+        {
+            var user = await _userRepository.SignIn(email, currentPassword);
+            if (user == null)
+                return false;
+
+            user.Password = newPassword;
+            return await _userRepository.Update(user);
+        }
+
+
+     
     }
 }
