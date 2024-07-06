@@ -62,7 +62,25 @@ namespace TourismGoDomain.Core.Services
             return await _userRepository.Update(user);
         }
 
+        public async Task<bool> AddUser(UserRequestAuthDTO userRequest)
+        {
+            var user = new User()
+            {
+                Email = userRequest.Email,
+                Password = userRequest.Password,
+                FirstName = userRequest.FirstName,
+                LastName = userRequest.LastName,
+                Country = userRequest.Country,
+                DateOfBirth = userRequest.DateOfBirth,
+                Address = userRequest.Address,
+                IsActive = true,
+                Type = "U"
+            };
 
-     
+            return await _userRepository.Insert(user);
+        }
+
+
+
     }
 }

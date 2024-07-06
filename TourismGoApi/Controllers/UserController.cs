@@ -60,5 +60,33 @@ namespace TourismGoApi.Controllers
             return Ok("Contraseña cambiada con éxito.");
         }
 
+        // Para Agregar un nuevo usuario
+        [HttpPost("AddUser")]
+        public async Task<IActionResult> AddUser([FromBody] UserRequestAuthDTO userRequest)
+        {
+            if (userRequest == null || string.IsNullOrEmpty(userRequest.Email) || string.IsNullOrEmpty(userRequest.Password))
+            {
+                return BadRequest("Los datos del usuario son inválidos.");
+            }
+
+            var user = new User()
+            {
+                Email = userRequest.Email,
+                Password = userRequest.Password,
+                FirstName = userRequest.FirstName,
+                LastName = userRequest.LastName,
+                Country = userRequest.Country,
+                DateOfBirth = userRequest.DateOfBirth,
+                Address = userRequest.Address,
+                IsActive = true,
+                Type = "U"
+            };
+
+            var result = await _userService.Insert(user);
+            if (!result) return BadRequest("No se pudo crear el usuario.");
+            return Ok("Usuario creado con éxito.");
+        }
+
+
     }
 }
